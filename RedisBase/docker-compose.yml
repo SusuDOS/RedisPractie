@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.30
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123456
+    volumes:
+      - "/root/RedisPractie/MySqlConf/log/:/var/log/"
+      - "/root/RedisPractie/MySqlConf/data/:/var/lib/mysql/"
+      - "/root/RedisPractie/MySqlConf/conf/my.cnf:/etc/mysql/conf.d/my.cnf"
+    ports:
+      - "3306:3306"
+  redis:
+    container_name: redis
+    image: redis:7.0.4-alpine3.16
+    volumes:
+      - /root/RedisPractie/RedisConf/conf:/usr/local/etc/redis
+      - /root/RedisPractie/RedisConf/data:/data
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "8008:6379"
+  nginx:
+    container_name: nginx
+    image: nginx:stable
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123456
+    volumes:
+      - /root/RedisPractie/NginxConf/html/hmdp/:/usr/share/nginx/html/
+      - /root/RedisPractie/NginxConf/conf/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "18080:8080"

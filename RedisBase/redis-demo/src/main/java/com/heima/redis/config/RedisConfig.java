@@ -1,0 +1,34 @@
+package com.heima.redis.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+
+@Configuration
+public class RedisConfig {
+    // 1. 本地的对象要存储在redis里面，传输过去需要序列化，默认的序列化是object序列化.
+    // 2. 默认序列化为二进制，占用大量空间而且不方便阅读，所以使用自定义序列化工具.
+    // 3. key序列化为string，value序列化为json格式
+
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        // 创建RedisTemplate对象
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        // 设置连接工厂
+        template.setConnectionFactory(connectionFactory);
+        // 创建JSON序列化工具
+        GenericJackson2JsonRedisSerializer jsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
+        // 设置Key的序列化
+        template.setKeySerializer(RedisSerializer.string());
+        template.setHashKeySerializer(RedisSerializer.string());
+        // 设置Value的序列化
+        template.setValueSerializer(jsonRedisSerializer);
+        template.setHashValueSerializer(jsonRedisSerializer);
+        // 返回
+        return template;
+    }
+}
