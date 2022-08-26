@@ -31,6 +31,8 @@ set global sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION
 ## 创建redis stream队列.
 ## g1从stream.orders中从0开始读取，若没有g1，则自动创建.
 ## 自动创建参数为：mkstream
+redis-cli -p 8008
+auth abc123456
 xgroup create stream.orders g1 0 mkstream
 ```
 

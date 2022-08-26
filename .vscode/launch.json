@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch HmDianPingApplication",
+            "request": "launch",
+            "mainClass": "com.hmdp.HmDianPingApplication",
+            "projectName": "hm-dianping"
+        }
+    ]
+}
